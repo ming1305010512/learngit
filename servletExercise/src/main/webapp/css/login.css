@@ -1,0 +1,26 @@
+#content{
+    height: 400px;
+    width: 600px;
+    border:1px solid #c7ff2d;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    border-radius: 10px;
+}
+#login{
+
+    height: 260px;
+    width: 280px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 35px;
+    border: 1px solid #f6fcff;
+    border-radius: 10px;
+}
+h3{
+    margin-left: 90px;
+
+}
+body{
+    background-color: #f7ffd8;
+}
