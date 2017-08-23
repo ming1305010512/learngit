@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--使用类的无参数构造创建bean-->
+    <bean id="userServiceOne" class="com.lm.service.UserService"/>
+
+    <!--使用静态工厂创建-->
+    <!--
+    class:静态工厂的全限定类名
+    factory-method:工厂里的需要调用的方法
+    -->
+    <bean id="userServiceTwo" class="com.lm.service.StaticFactory" factory-method="getUserService"/>
+
+    <!--使用实例工厂创建bean实例-->
+    <!--首先需要先创建工厂的实例-->
+    <bean id="instantiationFactory" class="com.lm.service.InstantiationFactory"/>
+    <!--再来创建UserService的bean实例-->
+    <bean id="userServiceThree" factory-bean="instantiationFactory" factory-method="getUserService"/>
+
+    <!--属性注入-->
+    <bean id="constructorInject" class="com.lm.service.TestConstructorInject">
+        <!--使用有参的构造注入-->
+        <constructor-arg name="name" value="龙鸣"></constructor-arg>
+        <!--使用set注入-->
+        <property name="description" value="I'm birth 1995/12/12"></property>
+    </bean>
+
+    <!--p名称空间注入-->
+    <bean id="pNameInject" class="com.lm.service.TestConstructorInject" p:category="书籍"/>
+
+    <!--注入对象类型属性-->
+    <!--首先需要UserDao-->
+    <bean id="userDao" class="com.lm.dao.UserDao"/>
+    <!--将userDao注入到UserService的userDao属性中-->
+    <bean id="injectObject" class="com.lm.service.UserService">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <!--注入复杂属性-->
+    <bean id="complexPropertyInject" class="com.lm.service.TestConstructorInject">
+        <!--数组-->
+        <property name="arrays">
+            <list>
+                <value>arrays1</value>
+                <value>arrays2</value>
+                <value>arrays3</value>
+            </list>
+        </property>
+        <!--list集合-->
+        <property name="list">
+            <list>
+                <value>list1</value>
+                <value>list2</value>
+                <value>list3</value>
+            </list>
+        </property>
+        <!--map集合-->
+        <property name="map">
+            <map>
+                <entry key="map1" value="map1"></entry>
+                <entry key="map2" value="map2"></entry>
+                <entry key="map3" value="map3"></entry>
+            </map>
+        </property>
+
+        <!--properties-->
+        <property name="properties">
+            <props>
+                <prop key="driver">com.mysql.jdbc.Driver</prop>
+                <prop key="uaername">root</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

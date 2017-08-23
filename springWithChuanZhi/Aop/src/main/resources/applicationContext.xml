@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--配置对象-->
+    <bean id="book" class="com.lm.service.Book"></bean>
+    <bean id="myBook" class="com.lm.service.MyBookWithBeforeEnhance"></bean>
+
+    <!--配置aop操作-->
+    <aop:config>
+        <!--配置切入点-->
+        <aop:pointcut id="pointCutBook" expression="execution(* com.lm.service.Book.add(..))"/>
+        <!--配置切面，即把增强用到需要增强的方法上面-->
+        <!--ref:引用增强的类-->
+        <aop:aspect ref="myBook">
+            <!--配置前置通知-->
+            <!--
+            method:增强类的方法
+            pointcut-ref:引用切入点
+            整个就是表示把增强类的方法应用到切入点上
+            -->
+            <aop:before method="before" pointcut-ref="pointCutBook"/>
+            <!--配置后置增强-->
+            <aop:after method="after" pointcut-ref="pointCutBook"/>
+            <!--环绕通知配置-->
+            <aop:around method="around" pointcut-ref="pointCutBook"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

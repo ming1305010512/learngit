@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lm.mapper.ItemsCustomMapper">
+
+    <!--定义sql片段-->
+    <sql id="query_items_list">
+        <if test="itemCustom!=null">
+          <if test="itemCustom.itemName!=null and itemCustom.itemName!=''">
+              item_name like "%${itemCustom.itemName}%"
+          </if>
+        </if>
+    </sql>
+    
+    <select id="getItemsList" parameterType="com.lm.po.QueryItemsVo" resultType="com.lm.po.ItemCustom">
+        SELECT id,item_name itemName,item_price itemPrice,item_detail itemDetail  FROM items
+        <where>
+            <include refid="query_items_list"/>
+        </where>
+    </select>
+</mapper>

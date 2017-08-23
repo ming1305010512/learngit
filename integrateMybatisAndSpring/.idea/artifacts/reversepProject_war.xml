@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="reversepProject:war">
+    <output-path>$PROJECT_DIR$/reversepProject/target</output-path>
+    <root id="archive" name="reversepProject.war">
+      <element id="artifact" artifact-name="reversepProject:war exploded" />
+    </root>
+  </artifact>
+</component>

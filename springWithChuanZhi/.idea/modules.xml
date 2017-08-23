@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Aop/Aop.iml" filepath="$PROJECT_DIR$/Aop/Aop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springTx/springTx.iml" filepath="$PROJECT_DIR$/springTx/springTx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springWithChuanZhi.iml" filepath="$PROJECT_DIR$/springWithChuanZhi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springWithChuanZhiAsConnectionPoolUse/springWithChuanZhiAsConnectionPoolUse.iml" filepath="$PROJECT_DIR$/springWithChuanZhiAsConnectionPoolUse/springWithChuanZhiAsConnectionPoolUse.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springtx2/springtx2.iml" filepath="$PROJECT_DIR$/springtx2/springtx2.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="springTx:war">
+    <output-path>$PROJECT_DIR$/springTx/target</output-path>
+    <root id="archive" name="springWithChuanZhi.war">
+      <element id="artifact" artifact-name="springTx:war exploded" />
+    </root>
+  </artifact>
+</component>

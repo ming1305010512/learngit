@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!--<context:property-placeholder location="properties/log4j.properties"/>-->
+    <!--配置多个properties文件的方法-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <array>
+                <value></value>
+                <value>properties/db.properties</value>
+            </array>
+        </property>
+    </bean>
+
+    <!--c3p0数据源的配置-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <!--配置sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--加载mybatise的配置文件-->
+        <property name="configLocation" value="config/mybatis/SqlMapConfig.xml"/>
+        <!--注入数据源-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--使用原始Dao的方式-->
+    <bean id="userDao" class="com.lm.daos.Impl.UserDaoImpl">
+        <!--注入sqlSessionFactory-->
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+    <!--使用mapper代理方式-->
+    <!--mapper配置：根据mapper接口生成代理对象
+        对象使用MapperFactoryBean来创建
+    -->
+    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <!--需要制定是哪个接口,所以要注入接口
+        value:只接口的全路径
+        -->
+        <property name="mapperInterface" value="com.lm.mapper.UserMapper"/>
+        <!--注入SqlSessionFactory-->
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+    <!--使用批量扫描mapper-->
+    <!--1、使用这个之后，SqlMapConfig.xml中的<mappers>标签的批量扫描就不需要配置了
+        2、但是这里也需要遵循那里的规范：mapper接口类名和mapper.xml映射文件名保持一致，且在同一个目录中
+        3、使用的类是MapperScannerConfigurer
+        4、使用扫描之后mapper bean的id为mapper类名首字母小写
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--需啊指定扫描的包名，如果有多个，需要用半角的逗号隔开-->
+        <property name="basePackage" value="com.lm.mapper"/>
+        <!--还需要注入SqlSessionFactory
+        注意：这里的属性名是sqlSessionFactoryBeanName，不是sqlSessionFactory
+        因为该bean自动扫描，加载配置文件时，这里会先于datasource那边的数据源执行
+        value:SqlSessionFactoryBean的id值
+        -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+</beans>

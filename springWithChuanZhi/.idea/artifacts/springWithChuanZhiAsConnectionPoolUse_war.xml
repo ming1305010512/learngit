@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="springWithChuanZhiAsConnectionPoolUse:war">
+    <output-path>$PROJECT_DIR$/springWithChuanZhiAsConnectionPoolUse/target</output-path>
+    <root id="archive" name="springWithChuanZhiAsConnectionPoolUse.war">
+      <element id="artifact" artifact-name="springWithChuanZhiAsConnectionPoolUse:war exploded" />
+    </root>
+  </artifact>
+</component>
